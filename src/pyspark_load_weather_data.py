@@ -16,10 +16,10 @@ connection_properties = {
 }
 
 
-path="C:\\Users\Bhargava Reddy\Downloads\corteva\code-challenge-template\wx_data\*"
+path="C:\\Users\Bhargava Reddy Yeddu\Downloads\corteva\code-challenge-template\wx_data\*"
 # Create a new column 'filename' with the name of the input file
 # Convert the RDD to a DataFrame
-rdd = sc.textFile("C://Users/Bhargava Reddy/Downloads/corteva/code-challenge-template/wx_data/")
+rdd = sc.textFile("C://Users/Bhargava Reddy Yeddu/Downloads/corteva/code-challenge-template/wx_data/")
 print(rdd)
 df = rdd.toDF(["content"])
 
