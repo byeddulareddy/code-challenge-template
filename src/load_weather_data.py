@@ -144,6 +144,6 @@ def aggregate_data():
 
 if __name__ == "__main__":
     print("invoking the fucntion")
-    load_data_to_postgress()
+    # load_data_to_postgress()
     print("executing aggregate fucntion")
     aggregate_data()

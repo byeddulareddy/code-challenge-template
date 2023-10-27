@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather Data to filter station id and date</title>
+</head>
+<body>
+    <h1>PostgreSQL Table Data</h1>
+    <form action="/api/weather" method="post">
+        Weather Station ID: <input type="text" name="weather_station_id" value="{{ request.form['weather_station_id'] }}"/> <br />
+        <br/>
+        Measurement Date: <input type="text" name="measurement_date" value="{{ request.form['measurement_date'] }}"/> <br />
+        <input type="submit" name="submit" value="Submit" />
+    </form>
+    <table>
+        <tr>
+            <th>weather_station_id</th>
+            <th>measurement_date</th>
+            <th>max_temperature</th>
+            <th>min_temperature</th>
+            <th>precipitation</th>
+        </tr>
+        <!-- Use Python to populate table rows -->
+        {% for row in weather_data %}
+        <tr>
+            <td>{{ row[0] }}</td>
+            <td>{{ row[1] }}</td>
+            <td>{{ row[2] }}</td>
+            <td>{{ row[3] }}</td>
+            <td>{{ row[4] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h1>Weahter Data Stats </h1>
+    <form action="/api/weather/stats" method="post">
+        Weather Station ID: <input type="text" name="weather_station_id" value="{{ request.form['weather_station_id'] }}"/> <br />
+        <br/>
+        Measurement Year: <input type="text" name="measurement_year" value="{{ request.form['measurement_year'] }}"/> <br />
+        <input type="submit" name="submit" value="Submit" />
+    </form>
+    <table>
+        <tr>
+            <th>weather_station_id</th>
+            <th>measurement_year</th>
+            <th>avg_max_temperature</th>
+            <th>avg_min_temperature</th>
+            <th>total_precipitation</th>
+        </tr>
+        <!-- Use Python to populate table rows -->
+        {% for row in weather_aggregate_data %}
+        <tr>
+            <td>{{ row[0] }}</td>
+            <td>{{ row[1] }}</td>
+            <td>{{ row[2] }}</td>
+            <td>{{ row[3] }}</td>
+            <td>{{ row[4] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
