@@ -1,8 +1,9 @@
+# pylint: disable=bad-indentation
 from flask import Flask ,render_template,request, jsonify
 import psycopg2
 from datetime import date
 from flask_sqlalchemy import SQLAlchemy
-
+from flask_paginate import Pagination
 
 app = Flask(__name__, template_folder="template")
 
@@ -25,22 +26,48 @@ def db_login():
     connection = psycopg2.connect(**db_credentials)
     return connection
 
+def execute_queries(query):
+    try:
+        conn=db_login()
+        cur=conn.cursor()
+        cur.execute(query)
+        data=cur.fetchall()
+
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+
+    finally:
+        # Close the cursor and connection
+        if cur:
+            cur.close()
+        if conn:
+            conn.close() 
+    return data
 
 @app.route('/')
 def index():
-  conn=db_login()
-  cur=conn.cursor()
-  cur.execute("select * from weather_data limit 10")
-  weather_data=cur.fetchall()
-  cur.close()
-  conn.close()
-  conn=db_login()
-  cur=conn.cursor()
-  cur.execute("select * from WEATHER_AGGREGATE_DATA limit 10")
-  weather_aggregate_data=cur.fetchall()
-  cur.close()
-  conn.close()
-  return render_template('index.html', weather_data=weather_data,weather_aggregate_data=weather_aggregate_data)
+    page = request.args.get('page', 1, type=int)
+    per_page = 10  # Number of items per page
+    weather_query="""select weather_station_id,measurement_date,max_temperature,min_temperature,precipitation 
+                     from WEATHER_DATA """
+    weather_data=execute_queries(weather_query)
+    # weather_count=len(weather_data)
+    weather_start_page = (page - 1) * per_page
+    weather_end_page = weather_start_page + per_page
+    weather_paginated_data = weather_data[weather_start_page:weather_end_page]
+    # pagination = Pagination(page=page, total=weather_count, record_name='items', per_page=per_page)
+    weather_total_pages = len(weather_data) // per_page + (1 if len(weather_data) % per_page > 0 else 0)
+    # print(f"pagination..{pagination.pages}")
+    weather_aggregate_query="""select weather_station_id,measurement_year,avg_max_temperature,avg_min_temperature,total_precipitation
+                     from WEATHER_AGGREGATE_DATA """
+    weather_aggregate_data=execute_queries(weather_aggregate_query)
+    # weather_agg_count=len(weather_data)
+    weather_agg_start_page = (page - 1) * per_page
+    weather_agg_end_page = weather_agg_start_page + per_page
+    weather_agg_paginated_data = weather_aggregate_data[weather_agg_start_page:weather_agg_end_page]
+    weather_agg_total_pages = len(weather_aggregate_data) // per_page + (1 if len(weather_aggregate_data) % per_page > 0 else 0)
+    return render_template('index.html', weather_paginated_data=weather_paginated_data , weather_total_pages=weather_total_pages, weather_data_current_page=page,
+                                         weather_agg_paginated_data=weather_agg_paginated_data , weather_agg_total_pages=weather_agg_total_pages, weather_agg_current_page=page)
  
 
 # add a new sock to the database
@@ -67,7 +94,6 @@ def insert():
     return  jsonify(
                       weather_data=data
                   )
-
 
 # add a new sock to the database
 @app.route('/api/weather/stats', methods=['GET', 'POST'])
