@@ -1,5 +1,5 @@
 Assesments solutions details:
-===================================================================================================================
+===================================================================
 Problem 1 - Data Modeling
 
 Solution:
@@ -17,8 +17,7 @@ Solution:
 
 
         Conclusion: if we frequently read this data and do aggreagation with date field better to have partitions in table to get better perofrmance.
-
-===================================================================================================================
+===================================================================
 Problem 2 - Ingestion:
 Write code to ingest the weather data from the raw text files supplied into your database, using the model you designed. Check for duplicates: if your code is run twice, you should not end up with multiple rows with the same data in your database. Your code should also produce log output indicating start and end times and number of records ingested.
 
@@ -36,18 +35,12 @@ Solution:
         Additional: 
         Validating data with /code-challenge-template/src/data_quality_validation.py py files it checks the  number of records in all text files and check those records are matching to postgress table if not it will print in logs
 
-
-
-===================================================================================================================
-
-
+===================================================================
 Problem 3 - Data Analysis
 
 -------------------------
 
 For every year, for every weather station, calculate:
-
-
 
 * Average maximum temperature (in degrees Celsius)
 
@@ -67,8 +60,7 @@ Solution:
         * Total accumulated precipitation (in centimeters)
 
         Considered -9999 to Null while calculating avg and sum.
-===================================================================================================================
-
+===================================================================
 
 Problem 4 - REST API
 
@@ -115,14 +107,14 @@ Solution:
         Below is page returns all data wirh paginated and filter option
 
         ![Alt text](image-10.png)
-        ![Alt text](image-11.png)
+        ![Alt text](https://github.com/byeddulareddy/code-challenge-template/blob/bhargava_code_test/image-11.png)
 
 
 
 
 
 
-===================================================================================================================
+===================================================================
 Extra Credit - Deployment
 
 -------------------------
@@ -133,4 +125,4 @@ Extra Credit - Deployment
 Solution: 
         Documented the deployment process in this file
        \code-challenge-template\Deployment_approach_to_aws.md
-===================================================================================================================
+===================================================================
