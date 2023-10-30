@@ -36,76 +36,25 @@
             {% set end_page = (start_page + max_pages) if weather_data_current_page > max_pages else max_pages %}
             
             {% if start_page > 1 %}
-                <a href="{{ url_for('index', page=1) }}">1</a>
+                <a href="{{ url_for('weather_data', page=1) }}">1</a>
                 <span>...</span>
             {% endif %}
             
             {% for page_num in range(start_page, end_page + 1) %}
-                <a href="{{ url_for('index', page=page_num) }}">{{ page_num }}</a>
+                <a href="{{ url_for('weather_data', page=page_num) }}">{{ page_num }}</a>
                 <span>...</span>
             {% endfor %}
             
             {% if end_page < weather_total_pages %}
-                <a href="{{ url_for('index', page=weather_total_pages) }}">{{ weather_total_pages }}</a>
+                <a href="{{ url_for('weather_data', page=weather_total_pages) }}">{{ weather_total_pages }}</a>
                 <span>...</span>
             {% endif %}
             
             {% if weather_data_current_page < weather_total_pages %}
-                <a href="{{ url_for('index', page=weather_data_current_page + 1) }}">Next</a>
+                <a href="{{ url_for('weather_data', page=weather_data_current_page + 1) }}">Next</a>
                 <span>...</span>
             {% endif %}
         </div>
     </table>
 
-    <h1>Weahter Data Stats </h1>
-    <form action="/api/weather/stats" method="post">
-        Weather Station ID: <input type="text" name="weather_station_id" value="{{ request.form['weather_station_id'] }}"/> <br />
-        <br/>
-        Measurement Year: <input type="text" name="measurement_year" value="{{ request.form['measurement_year'] }}"/> <br />
-        <input type="submit" name="submit" value="Submit" />
-    </form>
-    <table>
-        <tr>
-            <th>weather_station_id</th>
-            <th>measurement_year</th>
-            <th>avg_max_temperature</th>
-            <th>avg_min_temperature</th>
-            <th>total_precipitation</th>
-        </tr>
-        <!-- Use Python to populate table rows -->
-        {% for row in weather_agg_paginated_data %}
-        <tr>
-            <td>{{ row[0] }}</td>
-            <td>{{ row[1] }}</td>
-            <td>{{ row[2] }}</td>
-            <td>{{ row[3] }}</td>
-            <td>{{ row[4] }}</td>
-        </tr>
-        {% endfor %}
-        <div>
-            {% set max_pages = 5 %} {# Define the maximum number of pages to display #}
-            {% set start_page = (weather_agg_current_page - max_pages) if weather_agg_current_page > max_pages else 1 %}
-            {% set end_page = (start_page + max_pages) if weather_agg_current_page > max_pages else max_pages %}
-            
-            {% if start_page > 1 %}
-                <a href="{{ url_for('index', page=1) }}">1</a>
-                <span>...</span>
-            {% endif %}
-            
-            {% for page_num in range(start_page, end_page + 1) %}
-                <a href="{{ url_for('index', page=page_num) }}">{{ page_num }}</a>
-                <span>...</span>
-            {% endfor %}
-            
-            {% if end_page < weather_agg_total_pages %}
-                <span>...</span>
-                <a href="{{ url_for('index', page=weather_agg_total_pages) }}">{{ weather_agg_total_pages }}</a>
-                <span>...</span>
-            {% endif %}
-            
-            {% if weather_agg_current_page < weather_agg_total_pages %}
-                <a href="{{ url_for('index', page=weather_agg_current_page + 1) }}">Next</a>
-                <span>...</span>
-            {% endif %}
-        </div>
-    </table>
+    

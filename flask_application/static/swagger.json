@@ -1,0 +1,200 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "API Documentation",
+    "description": "An API to return Weather data with aggregatoion "
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:5000/" 
+    }
+  ],
+  "paths": {
+    "/api/weather": {
+      "get": {
+        "tags": [
+          "Weather data"
+        ],
+        "description": "Returns weather data with weather_station_id,measurement_date,max_temperature,min_temperature,precipitation ",
+        "parameters": [
+          {
+            "name": "weather_station_id",
+            "in":"query",
+            "required": false,
+            "description": "weather_station_id",
+            "schema": {
+              "type": "string",
+              "example": "USC00255310",
+              "maximum": 10
+            }
+          },
+          {
+            "name": "measurement_date",
+            "in":"query",
+            "required": false,
+            "description": "measurement_date",
+            "schema": {
+              "type": "string",
+              "example": "1993-08-18",
+              "maximum": 10
+            }
+          }
+          
+        ],
+        "responses": {
+          "200": {
+            "description": "200 responce",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref":"#/components/schemas/weather_data"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid details supplied"
+          },
+          "404": {
+            "description": " weather_station_id or measurement_date not found"
+          },
+          "405": {
+            "description": "Validation exception"
+          }
+        }
+        
+      }
+    },
+    "/api/weather/stats": {
+      "get": {
+        "tags": [
+          "Weather stats data"
+        ],
+        "description": "Returns weather data with weather_station_id,measurement_year,avg_max_temperature,avg_min_temperature,total_precipitation ",
+        "parameters": [
+          {
+            "name": "weather_station_id",
+            "in":"query",
+            "required": false,
+            "description": "weather_station_id",
+            "schema": {
+              "type": "string",
+              "example": "USC00255310"
+            }
+          },
+          {
+            "name": "measurement_year",
+            "in":"query",
+            "required": false,
+            "description": "measurement_year",
+            "schema": {
+              "type": "Integer",
+              "example": 1994
+            }
+          }
+          
+        ],
+        "responses": {
+          "200": {
+            "description": "200 responce",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref":"#/components/schemas/weather_stats_data"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid details supplied"
+          },
+          "404": {
+            "description": " weather_station_id or measurement_year not found"
+          },
+          "405": {
+            "description": "Validation exception"
+          }
+        }
+        
+      }
+    }
+  },
+  "components":{
+    "parameters": "{}",
+    "schemas":{
+      "weather_data":{
+      "application/json": {
+        "type":"array",
+        "example": {
+            "weather_data": [
+              {
+                "max_temperature": -106,
+                "measurement_date": "Tue, 01 Jan 1985 00:00:00 GMT",
+                "min_temperature": -139,
+                "precipitation": 0,
+                "weather_station_id": "USC00258395"
+              }
+            ]
+      },
+      "items":{
+        "type":"object",
+        "properties":{
+          "weather_station_id":{
+            "type":"string"
+          },
+          "measurement_date":{
+            "type":"Date"
+          },
+          "max_temperature":{
+            "type":"Integer"
+          },
+          "min_temperature":{
+            "type":"Integer"
+          },
+          "precipitation":{
+            "type":"Integer"
+          }
+        }
+      }
+    }
+    },
+    "weather_stats_data":{
+      "application/json": {
+        "type":"array",
+        "example": {
+            "weather_stats_data": [
+              {
+                "avg_max_temperature": -106,
+                "measurement_year": "1994",
+                "avg_min_temperature": -139,
+                "total_precipitation": 0,
+                "weather_station_id": "USC00258395"
+              }
+            ]
+      },
+      "items":{
+        "type":"object",
+        "properties":{
+          "weather_station_id":{
+            "type":"string"
+          },
+          "measurement_year":{
+            "type":"String"
+          },
+          "avg_max_temperature":{
+            "type":"Integer"
+          },
+          "avg_min_temperature":{
+            "type":"Integer"
+          },
+          "total_precipitation":{
+            "type":"Integer"
+          }
+        }
+      }
+    }
+    }
+  }
+ }
+}
