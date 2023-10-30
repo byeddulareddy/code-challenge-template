@@ -108,6 +108,9 @@ Solution:
 
         ![Alt text](image-10.png)
         ![Alt text](https://github.com/byeddulareddy/code-challenge-template/blob/bhargava_code_test/image-11.png)
+        ![image-11](https://github.com/byeddulareddy/code-challenge-template/assets/144828096/0b57aa2a-5ab8-4abc-9464-aeafd049b541)
+
+        
 
 
 
