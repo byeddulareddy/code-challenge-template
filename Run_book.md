@@ -107,7 +107,7 @@ Solution:
         Below is page returns all data wirh paginated and filter option
 
         ![Alt text](image-10.png)
-        ![Alt text](image-11.png)
+        ![Alt text](https://github.com/byeddulareddy/code-challenge-template/blob/bhargava_code_test/image-11.png)
 
 
 
