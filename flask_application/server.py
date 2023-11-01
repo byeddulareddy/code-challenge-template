@@ -87,7 +87,7 @@ def weather_data():
 def weather_ui_stats():
     page = request.args.get('page', 1, type=int)
     per_page = 10  # Number of items per page
-    weather_stats_query="""select weather_station_id,measurement_year,avg_max_temperature,avg_min_temperature,total_precipitation
+    weather_stats_query="""select weather_station_id,measurement_year,avg_max_temperature,avg_min_temperature,total_precipitation_cm
                      from WEATHER_AGGREGATE_DATA """
     weather_agg_stats_data=execute_queries(weather_stats_query)
     # weather_count=len(weather_stats_query)
@@ -148,7 +148,7 @@ def weather_stats():
         measurement_year = request.values.get('measurement_year')
         where_condition = where_condition + f" AND measurement_year='{measurement_year}'"
     
-    cur.execute(f"select weather_station_id,measurement_year,avg_max_temperature,avg_min_temperature,total_precipitation from WEATHER_AGGREGATE_DATA where 1=1 {where_condition}")
+    cur.execute(f"select weather_station_id,measurement_year,avg_max_temperature,avg_min_temperature,total_precipitation_cm from WEATHER_AGGREGATE_DATA where 1=1 {where_condition}")
     WEATHER_AGGREGATE_DATA=cur.fetchall()
     serialized_data = [{'weather_station_id': item[0], 'measurement_year': item[1],
                             'avg_max_temperature': item[2], 'avg_min_temperature': item[3],
